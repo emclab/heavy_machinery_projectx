@@ -1,0 +1,113 @@
+<% if false %>
+  <%= render inline: ERB.new(@erb_code).result(binding) %>
+  
+<% else %>
+<div id="main_body">
+<h4><%= @title %></h4>
+
+<p>
+  <b><%= t('Project Name') %></b>
+  <%= @project.name %>
+</p>
+<p>
+  <b><%= t('Customer') %></b>
+  <%= @project.customer.name %>
+</p>
+<p>
+  <b><%= t('Qty') %></b>
+  <%= @project.qty %>
+</p>
+<p>
+  <b><%= t('Tech Spec') %></b>
+  <%= @project.tech_spec %>
+</p>
+<p>
+  <b><%= t('Other Spec') %></b>
+  <%= @project.other_spec %>
+</p>
+<p>
+  <b><%= t('Status') %></b>
+  <%= @project.status.try(:name) if @project.status_id.present? %>
+</p>
+<p>
+    <b><%= t('Contruction Requirement') %></b>
+    <%= @project.construction_requirement %>
+</p>
+<p>
+    <b><%= t('Installed At') %></b>
+    <%= @project.install_address %>
+</p>
+<p>
+    <b><%= t('Bid Doc Available Date') %></b>
+    <%= @project.bid_doc_available_date.strftime('%Y/%m/%/d') if @project.bid_doc_available_date.present? %>
+</p>
+<p>
+    <b><%= t('Bid Deadline') %></b>
+    <%= @project.bid_deadline.strftime('%Y/%m/%/d') if @project.bid_deadline.present? %>
+</p>
+<p>
+    <b><%= t('Tender Open Date') %></b>
+    <%= @project.tender_open_date.strftime('%Y/%m/%/d') if @project.tender_open_date.present? %>
+</p>
+<p>
+    <b><%= t('Design Start Date') %></b>
+    <%= @project.design_start_date.strftime('%Y/%m/%/d') if @project.design_start_date.present? %>
+</p>
+<p>
+    <b><%= t('Production Start Date') %></b>
+    <%= @project.production_start_date.strftime('%Y/%m/%/d') if @project.production_start_date.present? %>
+</p>
+<p>
+    <b><%= t('Install Start Date') %></b>
+    <%= @project.install_start_date.strftime('%Y/%m/%/d') if @project.install_start_date.present? %>
+</p>
+<p>
+    <b><%= t('Test Run Date') %></b>
+    <%= @project.test_run_date.strftime('%Y/%m/%/d') if @project.test_run_date.present? %>
+</p>
+<p>
+    <b><%= t('Turnover Date') %></b>
+    <%= @project.turn_over_date.strftime('%Y/%m/%/d') if @project.turn_over_date.present? %>
+</p>
+<p>
+    <b><%= t('Project Manager') %></b>
+    <%= @project.project_manager.name if @project.project_manager_id.present? %>
+</p>
+<p>
+    <b><%= t('Cancelled') %></b>
+    <%= @project.cancelled ? t('Yes') : t('No') %>
+</p>
+<p>
+    <b><%= t('Completed') %></b>
+    <%= @project.completed ? t('Yes') : t('No') %>
+</p>
+<p>
+    <b><%= t('Awarded') %></b>
+    <%= @project.awarded ? t('Yes') : t('No') %>
+</p>
+<p>
+  <b><%= t('Last Updated By') %></b>
+  <%= @project.last_updated_by.name %>
+</p>
+<p>
+  <b><%= t('LOG：') %></b>
+  <% Commonx::Log.where('resource_id = ? AND resource_name = ?', @project.id, params[:controller].sub('/', '_')).order("created_at DESC").each do |t| %>
+    <li><%= t.created_at.strftime("%Y/%m/%d") %>,&nbsp; <%= t.last_updated_by.name %>,&nbsp; <%= t.log %></li>
+  <% end %>
+</p>
+
+<table class="table table-striped">
+  <tr>
+    <th>
+    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    	<%= link_to t('New Log'), SUBURI + commonx.new_log_path(:resource_id => @project.id, :resource_name => params[:controller], :subaction => 'project',
+    	     :format => :js), :remote => true, :id => 'new_log_link' , :class => BUTTONS_CLS['action'] if has_action_right?('create_project', 'commonx/logs') %>
+    </th>
+  </tr>
+</table>
+
+<%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :id => 'close', :class => BUTTONS_CLS['action'] %>
+
+</div>
+
+<% end %>

@@ -1,0 +1,40 @@
+<% if false %>
+  <%= render inline: ERB.new(@erb_code).result(binding) %>
+  
+<% else %>
+<%= simple_form_for @project do |f| %>
+  <%= f.input :customer_name_autocomplete,:input_html => { data: {autocomplete_source: SUBURI + kustomerx.autocomplete_customers_path}},
+              :label => t('Customer'), :placeholder => "输入关键字选择客户", :required => true unless @customer%>
+  <%= f.input :customer_name, :label => t('Customer'), :readonly => true, :input_html => {:value => @customer.short_name} if @customer%>
+  <%= f.input :customer_id, :as => :hidden, :readonly => true, :input_html => {:value => @customer.id} if @customer%>
+  <%= f.input :name, :label => t('Project Name') %> 
+  <%= f.input :project_num, :label => t('Project Num'), :readonly => true %> 
+  <%= f.input :qty, :label => t('Qty') %> 
+  <%= f.input :tech_spec, :label => t('Tech Spec'), :input_html => { :rows => 4} %>
+  <%= f.input :other_spec, :label => t('Other Spec'), :input_html => { :rows => 4} %>
+  <%= f.input :install_address, :label => t('Installed At'), :input_html => { :rows => 4} %>
+  <%= f.input :construction_requirement, :label => t('Contruction Requirement'), :input_html => { :rows => 4} %>
+  <%= f.input :turn_over_requirement, :label => t('Turnover Requirement'), :input_html => { :rows => 4} %>
+  
+  <%= f.input :design_start_date, :label => t('Design Start Date'), :as => :string %>
+  <%= f.input :production_start_date, :label => t('Production Start Date'), :as => :string %>
+  <%= f.input :install_start_date, :label => t('Install Start Date'), :as => :string %>
+  <%= f.input :test_run_date, :label => t('Test Run Date'), :as => :string %>
+  <%= f.input :turn_over_date, :label => t('Turnover Date'), :as => :string %>
+  <%= f.input :bid_doc_available_date, :label => t('Bid Doc Available Date'), :as => :string %>
+  <%= f.input :bid_deadline, :label => t('Bid Deadline Date'), :as => :string %>
+  <%= f.input :tender_open_date, :label => t('Tender Open Date'), :as => :string %>
+  <%= f.input :status_id, :label => t('Status'), :collection => Commonx::CommonxHelper.return_misc_definitions('project_status'), :label_method => :name, :value_method => :id,
+              :include_blank => true %>
+  <%= f.input :project_manager_id, :label => t('Project Manager'), :collection => Authentify::UsersHelper.return_users('manage', 'heavy_machinery_projectx_projects'), :label_method => :name, :value_method => :id, 
+                                   :include_blank => true %>
+  <%= f.input :awarded, :label => t('Awarded'), :as => :boolean %>
+  
+  
+  <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
+  <%= f.button :submit, t('Save'), :class => BUTTONS_CLS['action'] %>
+<% end %>
+
+<% end %>
+
+
