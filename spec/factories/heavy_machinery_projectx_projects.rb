@@ -7,6 +7,7 @@ FactoryGirl.define do
     last_updated_by_id 1
     name "My machinery String"
     qty 1
+    category_id 1
     tech_spec "My tech Text"
     other_spec "MyText"
     install_address "My address Text"

@@ -42,5 +42,15 @@ module HeavyMachineryProjectx
       c = FactoryGirl.build(:heavy_machinery_projectx_project, :project_num => nil)
       c.should_not be_valid
     end
+    
+    it "should take nil category_id" do
+      c = FactoryGirl.build(:heavy_machinery_projectx_project, :category_id => nil)
+      c.should be_valid
+    end
+    
+    it "should reject 0 category_id" do
+      c = FactoryGirl.build(:heavy_machinery_projectx_project, :category_id => 0)
+      c.should_not be_valid
+    end
   end
 end

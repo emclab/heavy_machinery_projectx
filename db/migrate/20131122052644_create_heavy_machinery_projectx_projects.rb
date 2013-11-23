@@ -6,6 +6,7 @@ class CreateHeavyMachineryProjectxProjects < ActiveRecord::Migration
       t.integer :last_updated_by_id
       t.string :name
       t.integer :qty
+      t.integer :category_id
       t.string :project_num
       t.text :tech_spec
       t.text :other_spec
@@ -34,5 +35,6 @@ class CreateHeavyMachineryProjectxProjects < ActiveRecord::Migration
     add_index :heavy_machinery_projectx_projects, :completed
     add_index :heavy_machinery_projectx_projects, :cancelled
     add_index :heavy_machinery_projectx_projects, :awarded
+    add_index :heavy_machinery_projectx_projects, :category_id
   end
 end
