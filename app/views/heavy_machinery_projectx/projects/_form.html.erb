@@ -9,6 +9,8 @@
   <%= f.input :customer_name, :label => t('Customer'), :readonly => true, :input_html => {:value => @customer.short_name} if readonly?(@project, 'customer_id') %>
   <%= f.input :name, :label => t('Project Name'), :readonly => readonly?(@project, 'name') %> 
   <%= f.input :project_num, :label => t('Project Num'), :readonly => true %>  
+  <%#= f.input :category_id, :label => t('Project Category'), :collection => Commonx::CommonxHelper.return_misc_definitions('project_category'), :label_method => :name, :value_method => :id,
+          <%#=    :include_blank => true %>
   <%= f.input :qty, :label => t('Qty'), :readonly => readonly?(@project, 'qty') %> 
   <%= f.input :tech_spec, :label => t('Tech Spec'), :input_html => { :rows => 4}, :readonly => readonly?(@project, 'tech_spec') %>
   <%= f.input :other_spec, :label => t('Other Spec'), :input_html => { :rows => 4}, :readonly => readonly?(@project, 'other_spec') %>

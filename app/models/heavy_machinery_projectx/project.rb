@@ -35,8 +35,7 @@ module HeavyMachineryProjectx
     validates_presence_of :tech_spec, :project_num 
     validates :customer_id, :status_id, :qty, :presence => true,
                                  :numericality => {:greater_than => 0, :only_integer => true} 
-    validates :category_id, :presence => true,
-                            :numericality => {:greater_than => 0, :only_integer => true}, :if => 'category_id.present?'
+    validates :category_id, :numericality => {:greater_than => 0, :only_integer => true}, :if => 'category_id.present?'
     
     def default_init
       project_num_time_gen = Authentify::AuthentifyUtility.find_config_const('project_num_time_gen', 'heavy_machinery_projectx')
