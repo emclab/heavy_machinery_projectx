@@ -28,6 +28,7 @@ module HeavyMachineryProjectx
       else
         flash[:notice] = t('Data Error. Not Saved!')
         @erb_code = find_config_const('project_new_view', 'heavy_machinery_projectx')
+        @customer = HeavyMachineryProjectx.customer_class.find_by_id(params[:project][:customer_id]) if params[:project].present? && params[:project][:customer_id].present?
         render 'new'
       end
     end
