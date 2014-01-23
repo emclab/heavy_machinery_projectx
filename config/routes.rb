@@ -1,5 +1,13 @@
 HeavyMachineryProjectx::Engine.routes.draw do
-  resources :projects
+  resources :projects do
+    collection do
+      get :search
+      put :search_results
+      get :stats
+      put :stats_results 
+      #get :autocomplete
+    end
+  end
 
-  root :to => 'hms#index'
+  root :to => 'projects#index'
 end
