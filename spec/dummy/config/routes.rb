@@ -7,6 +7,12 @@ Rails.application.routes.draw do
   mount Authentify::Engine => '/authentify'
   mount Kustomerx::Engine => '/customerx'
   mount Searchx::Engine => '/searchx'
+  mount SourcedPartx::Engine => '/src_part'
+  mount SuppliedPartx::Engine => '/pur_part'
+  mount StateMachineLogx::Engine => '/sm_log'
+  mount BizWorkflowx::Engine => '/biz_wf'
+  mount Supplierx::Engine => '/supplier'
+  mount EventTaskx::Engine => '/event_task'
   
   resource :session
   

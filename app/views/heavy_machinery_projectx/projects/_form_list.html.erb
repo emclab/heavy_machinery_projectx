@@ -21,6 +21,7 @@
     <th></th>
     <th></th>
     <th></th>
+    <th></th>
   </tr>
 
 <% models.each do |r| %>
@@ -44,11 +45,12 @@
     <td><%= t(prt(r, :completed).to_s) %></td>
     <td><%= t(prt(r, :cancelled).to_s) %></td>
     <td><%= prt(r, :turn_over_date).strftime('%Y/%m/%d') %></td>
-    <td><%= link_to t('Edit'), SUBURI + "/authentify/view_handler?index=1&url=#{edit_project_path(r)}" , :class => BUTTONS_CLS['action']   if has_action_right?('update', params[:controller], r )  %></td>
-    <td><%#= link_to t('Production Plan'), SUBURI + "/authentify/view_handler?index=1&url=#{SUBURI + CGI::escape(eval(HeavyMachineryProjectx.index_production_plan_path))}", :class => BUTTONS_CLS['action']  if has_action_right?('index', HeavyMachineryProjectx.production_plan_resource, r ) %></td>
-    <td><%#= link_to t('Installation'), SUBURI + "/authentify/view_handler?index=1&url=#{SUBURI + CGI::escape(eval(HeavyMachineryProjectx.index_installation_path))}", :class => BUTTONS_CLS['action']  if has_action_right?('index', HeavyMachineryProjectx.installation_resource, r ) %></td>
-    <td><%#= link_to t('Purchasing'), SUBURI + "/authentify/view_handler?index=1&url=#{SUBURI + CGI::escape(eval(HeavyMachineryProjectx.index_purchasing_path))}", :class => BUTTONS_CLS['action']  if has_action_right?('index', HeavyMachineryProjectx.purchasing_resource, r ) %></td>
-    <td><%#= link_to t('Sourcing'), SUBURI + "/authentify/view_handler?index=1&url=#{SUBURI + CGI::escape(eval(HeavyMachineryProjectx.index_sourcing_path))}", :class => BUTTONS_CLS['action']  if has_action_right?('index', HeavyMachineryProjectx.sourcing_resource, r ) %></td>
+    <td><%= link_to t('Edit'), SUBURI + "/authentify/view_handler?index=1&url=#{edit_project_path(r)}" , :class => BUTTONS_CLS['action'] if has_action_right?('update', params[:controller], r )  %></td>
+    <td><%= link_to t('Production Plans'), SUBURI + "/authentify/view_handler?index=1&url=#{SUBURI + CGI::escape(eval(HeavyMachineryProjectx.index_production_plan_path))}", :class => BUTTONS_CLS['action'] %></td>
+    <td><%= link_to t('Purchasing'), SUBURI + "/authentify/view_handler?index=1&url=#{SUBURI + CGI::escape(eval(HeavyMachineryProjectx.index_supplied_path))}", :class => BUTTONS_CLS['action'] %></td>
+    <td><%= link_to t('Sourcing'), SUBURI + "/authentify/view_handler?index=1&url=#{SUBURI + CGI::escape(eval(HeavyMachineryProjectx.index_sourced_path))}", :class => BUTTONS_CLS['action'] %></td>
+    <td><%= link_to t('Installation Plans'), SUBURI + "/authentify/view_handler?index=1&url=#{SUBURI + CGI::escape(eval(HeavyMachineryProjectx.index_installation_path))}", :class => BUTTONS_CLS['action']  %></td>
+    
   </tr>
 <% end %>
 </table>

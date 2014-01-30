@@ -42,7 +42,14 @@ describe "LinkeTests" do
         :sql_code => "record.last_updated_by_id == session[:user_id]")
       user_access = FactoryGirl.create(:user_access, :action => 'create_project', :resource => 'commonx_logs', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")
-        
+      user_access = FactoryGirl.create(:user_access, :action => 'index_production_plan', :resource => 'event_taskx_event_tasks', :role_definition_id => @role.id, :rank => 1,
+        :sql_code => "EventTaskx::EventTask.where(:task_category => 'production_plan').order('id DESC')") 
+        user_access = FactoryGirl.create(:user_access, :action => 'index_installation_plan', :resource => 'event_taskx_event_tasks', :role_definition_id => @role.id, :rank => 1,
+        :sql_code => "EventTaskx::EventTask.where(:task_category => 'installation_plan').order('id DESC')")  
+      ua1 = FactoryGirl.create(:user_access, :action => 'index', :resource => 'sourced_partx_parts', :role_definition_id => @role.id, :rank => 1,
+           :sql_code => "SourcedPartx::Part.scoped") 
+      ua1 = FactoryGirl.create(:user_access, :action => 'index', :resource => 'supplied_partx_parts', :role_definition_id => @role.id, :rank => 1,
+           :sql_code => "SuppliedPartx::Part.scoped")
       @cust = FactoryGirl.create(:kustomerx_customer)
       
       visit '/'
@@ -76,6 +83,29 @@ describe "LinkeTests" do
       click_link 'Edit'
       #save_and_open_page
       page.should have_content('Edit Project')
+      
+      
+      visit projects_path(:customer_id => @cust.id)
+      #save_and_open_page
+      click_link('Purchasing')
+      save_and_open_page
+      
+      visit projects_path(:customer_id => @cust.id)
+      #save_and_open_page
+      click_link('Sourcing')
+      save_and_open_page
+      
+      visit projects_path(:customer_id => @cust.id)
+      save_and_open_page
+      click_link('Production Plans')
+      #save_and_open_page
+      
+      visit projects_path(:customer_id => @cust.id)
+      #save_and_open_page
+      click_link('Installation Plans')
+      #save_and_open_page
+      
+      
     end
   end
 end

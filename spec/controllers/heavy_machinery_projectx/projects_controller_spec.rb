@@ -25,7 +25,11 @@ module HeavyMachineryProjectx
     describe "GET 'index'" do
       it "returns all projects for regular user" do
         user_access = FactoryGirl.create(:user_access, :action => 'index', :resource => 'heavy_machinery_projectx_projects', :role_definition_id => @role.id, :rank => 1,
-        :sql_code => "HeavyMachineryProjectx::Project.where(:cancelled => false).order('id')")        
+        :sql_code => "HeavyMachineryProjectx::Project.where(:cancelled => false).order('id')")  
+        user_access = FactoryGirl.create(:user_access, :action => 'index_production_plan', :resource => 'event_taskx_event_tasks', :role_definition_id => @role.id, :rank => 1,
+        :sql_code => "EventTaskx::EventTask.where(:task_category => 'production_plan').order('id DESC')") 
+        user_access = FactoryGirl.create(:user_access, :action => 'index_installation_plan', :resource => 'event_taskx_event_tasks', :role_definition_id => @role.id, :rank => 1,
+        :sql_code => "EventTaskx::EventTask.where(:task_category => 'installation_plan').order('id DESC')")     
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.create(:heavy_machinery_projectx_project, :cancelled => false, :last_updated_by_id => @u.id)
