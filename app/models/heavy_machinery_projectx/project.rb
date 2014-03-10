@@ -39,7 +39,7 @@ module HeavyMachineryProjectx
     
     def default_init
       project_num_time_gen = Authentify::AuthentifyUtility.find_config_const('project_num_time_gen', 'heavy_machinery_projectx')
-      self.project_num = eval(project_num_time_gen)
+      self.project_num = eval(project_num_time_gen) if project_num_time_gen.present?
     end
     
     def customer_name_autocomplete
