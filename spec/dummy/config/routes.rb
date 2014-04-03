@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   mount StateMachineLogx::Engine => '/sm_log'
   mount BizWorkflowx::Engine => '/biz_wf'
   mount Supplierx::Engine => '/supplier'
+  mount Manufacturerx::Engine => '/manufacturer'
   mount EventTaskx::Engine => '/event_task'
   
   resource :session

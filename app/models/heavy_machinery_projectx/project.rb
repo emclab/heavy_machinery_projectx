@@ -32,10 +32,16 @@ module HeavyMachineryProjectx
     
     validates :name, :presence => true,
                      :uniqueness => {:case_sensitive => false, :message => I18n.t('Duplicate Name!')}
-    validates_presence_of :tech_spec, :project_num 
+    validates_presence_of :tech_spec  #, :project_num 
     validates :customer_id, :status_id, :qty, :presence => true,
                                  :numericality => {:greater_than => 0, :only_integer => true} 
     validates :category_id, :numericality => {:greater_than => 0, :only_integer => true}, :if => 'category_id.present?'
+    validate :dynamic_validate 
+    
+    def dynamic_validate
+      wf = Authentify::AuthentifyUtility.find_config_const('dynamic_validate', 'heavy_machinery_projectx')
+      eval(wf) if wf.present?
+    end
     
     def default_init
       project_num_time_gen = Authentify::AuthentifyUtility.find_config_const('project_num_time_gen', 'heavy_machinery_projectx')

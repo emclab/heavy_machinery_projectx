@@ -19,6 +19,7 @@ gem 'supplied_partx', :path => '../supplied_partx'
 gem 'state_machine_logx', :path => '../state_machine_logx'
 gem 'biz_workflowx', :path => '../biz_workflowx'
 gem 'supplierx', :path => '../supplierx'
+gem 'manufacturerx', :path => '../manufacturerx'
 gem 'event_taskx', :path => '../event_taskx'
 
 # Declare any dependencies that are still in development here instead of in
