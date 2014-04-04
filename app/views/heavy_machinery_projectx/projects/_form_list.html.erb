@@ -44,7 +44,7 @@
     <td><%= prt(r, 'project_manager.name') if r.project_manager_id.present? %></td>
     <td><%= t(prt(r, :completed).to_s) %></td>
     <td><%= t(prt(r, :cancelled).to_s) %></td>
-    <td><%= prt(r, :turn_over_date).strftime('%Y/%m/%d') %></td>
+    <td><%= prt(r, :turn_over_date).strftime('%Y/%m/%d') if r.turn_over_date.present? %></td>
     <td><%= link_to t('Edit'), SUBURI + "/authentify/view_handler?index=1&url=#{edit_project_path(r)}" , :class => BUTTONS_CLS['action'] if has_action_right?('update', params[:controller], r )  %></td>
     <td><%= link_to t('Production Plans'), SUBURI + "/authentify/view_handler?index=1&url=#{SUBURI + CGI::escape(eval(HeavyMachineryProjectx.index_production_plan_path))}", :class => BUTTONS_CLS['action'] %></td>
     <td><%= link_to t('Purchasing'), SUBURI + "/authentify/view_handler?index=1&url=#{SUBURI + CGI::escape(eval(HeavyMachineryProjectx.index_supplied_path))}", :class => BUTTONS_CLS['action'] %></td>

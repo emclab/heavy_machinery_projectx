@@ -3,16 +3,16 @@ module HeavyMachineryProjectx
     
     after_initialize :default_init, :if => :new_record?
     
-    attr_accessor :awarded_noupdate, :cancelled_noupdate, :completed_noupdate, :customer_name, :category_name
+    attr_accessor :awarded_noupdate, :cancelled_noupdate, :completed_noupdate, :customer_name, :category_name, :customer_name_autocomplete
     attr_accessible :awarded, :cancelled, :completed, :construction_requirement, :customer_id, :install_address, :last_updated_by_id, :name, :other_spec, 
                     :project_manager_id, :status_id, :tech_spec, :turn_over_requirement, :design_start_date, :production_start_date, :install_start_date,
-                    :test_run_date, :turn_over_date, :bid_doc_available_date, :bid_deadline, :tender_open_date, :qty, :project_num, :category_id,
+                    :test_run_date, :turn_over_date, :bid_doc_available_date, :bid_deadline, :tender_open_date, :qty, :project_num, :category_id, :customer_name_autocomplete,
                     :customer_name,
                     :as => :role_new
     attr_accessible :awarded, :cancelled, :completed, :construction_requirement, :customer_id, :install_address, :last_updated_by_id, :name, :other_spec, 
                     :project_manager_id, :status_id, :tech_spec, :turn_over_requirement, :design_start_date, :production_start_date, :install_start_date,
                     :test_run_date, :turn_over_date, :bid_doc_available_date, :bid_deadline, :tender_open_date, :qty, :category_id,
-                    :awarded_noupdate, :cancelled_noupdate, :completed_noupdate, :customer_name, :project_num,
+                    :awarded_noupdate, :cancelled_noupdate, :completed_noupdate, :customer_name, :project_num, :customer_name_autocomplete,
                     :as => :role_update  
     
     attr_accessor :project_id_s, :keyword_s, :start_date_s, :end_date_s, :customer_id_s, :status_s, :expedite_s, :cancelled_s, :completed_s,
