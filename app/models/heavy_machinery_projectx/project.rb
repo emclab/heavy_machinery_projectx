@@ -3,7 +3,7 @@ module HeavyMachineryProjectx
     
     after_initialize :default_init, :if => :new_record?
     
-    attr_accessor :awarded_noupdate, :cancelled_noupdate, :completed_noupdate, :customer_name, :category_name, :customer_name_autocomplete
+    attr_accessor :awarded_noupdate, :cancelled_noupdate, :completed_noupdate, :customer_name, :category_name
     attr_accessible :awarded, :cancelled, :completed, :construction_requirement, :customer_id, :install_address, :last_updated_by_id, :name, :other_spec, 
                     :project_manager_id, :status_id, :tech_spec, :turn_over_requirement, :design_start_date, :production_start_date, :install_start_date,
                     :test_run_date, :turn_over_date, :bid_doc_available_date, :bid_deadline, :tender_open_date, :qty, :project_num, :category_id, :customer_name_autocomplete,
