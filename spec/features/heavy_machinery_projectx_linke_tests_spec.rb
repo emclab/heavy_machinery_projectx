@@ -62,7 +62,7 @@ describe "LinkeTests" do
     it "works! (now write some real specs)" do
       qs = FactoryGirl.create(:heavy_machinery_projectx_project, :cancelled => false, :last_updated_by_id => @u.id, :customer_id => @cust.id)
       visit projects_path(:customer_id => @cust.id)
-      #save_and_open_page
+      save_and_open_page
       page.should have_content('Projects')
       click_link 'New Project'
       #save_and_open_page
@@ -79,7 +79,8 @@ describe "LinkeTests" do
       click_link 'New Log'
       page.should have_content('Log')
       #save_and_open_page
-      visit projects_path()      
+      visit projects_path() 
+      save_and_open_page
       click_link 'Edit'
       #save_and_open_page
       page.should have_content('Edit Project')

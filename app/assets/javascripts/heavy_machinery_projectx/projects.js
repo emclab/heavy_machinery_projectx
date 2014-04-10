@@ -13,7 +13,7 @@ $(function() {
 
 
 $(function() {
-	$( "#project_design_start_date" ).datepicker({dateFormat: 'yy-mm-dd'});
+	$( "#project_design_start_date" ).datepicker({format:'yy-mm-dd'});
 	$( "#project_install_start_date" ).datepicker({dateFormat: 'yy-mm-dd'});
 	$( "#project_production_start_date" ).datepicker({dateFormat: 'yy-mm-dd'});
 	$( "#project_test_run_date" ).datepicker({dateFormat: 'yy-mm-dd'});
