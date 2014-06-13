@@ -2,9 +2,9 @@ HeavyMachineryProjectx::Engine.routes.draw do
   resources :projects do
     collection do
       get :search
-      put :search_results
+      get :search_results
       get :stats
-      put :stats_results 
+      get :stats_results 
       #get :autocomplete
     end
   end
