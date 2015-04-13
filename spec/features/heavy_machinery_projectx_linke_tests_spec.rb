@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "LinkeTests" do
+RSpec.describe "LinkeTests", type: :request do
   describe "GET /heavy_machinery_projectx_linke_tests" do
     mini_btn = 'btn btn-mini '
     ActionView::CompiledTemplates::BUTTONS_CLS =
@@ -47,9 +47,9 @@ describe "LinkeTests" do
         user_access = FactoryGirl.create(:user_access, :action => 'index_installation_plan', :resource => 'event_taskx_event_tasks', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "EventTaskx::EventTask.where(:task_category => 'installation_plan').order('id DESC')")  
       ua1 = FactoryGirl.create(:user_access, :action => 'index', :resource => 'sourced_partx_parts', :role_definition_id => @role.id, :rank => 1,
-           :sql_code => "SourcedPartx::Part.scoped") 
+           :sql_code => "SourcedPartx::Part") 
       ua1 = FactoryGirl.create(:user_access, :action => 'index', :resource => 'supplied_partx_parts', :role_definition_id => @role.id, :rank => 1,
-           :sql_code => "SuppliedPartx::Part.scoped")
+           :sql_code => "SuppliedPartx::Part")
       @cust = FactoryGirl.create(:kustomerx_customer)
       
       visit '/'
@@ -61,47 +61,47 @@ describe "LinkeTests" do
     end
     it "works! (now write some real specs)" do
       qs = FactoryGirl.create(:heavy_machinery_projectx_project, :cancelled => false, :last_updated_by_id => @u.id, :customer_id => @cust.id)
-      visit projects_path(:customer_id => @cust.id)
+      visit heavy_machinery_projectx.projects_path(:customer_id => @cust.id)
       save_and_open_page
-      page.should have_content('Projects')
+      expect(page).to have_content('Projects')
       click_link 'New Project'
       #save_and_open_page
-      page.should have_content('New Project')
-      visit projects_path
+      expect(page).to have_content('New Project')
+      visit heavy_machinery_projectx.projects_path
       #save_and_open_page
-      page.should have_content('Projects')
+      expect(page).to have_content('Projects')
       click_link 'New Project'
       #save_and_open_page
-      page.should have_content('New Project')
-      visit projects_path
+      expect(page).to have_content('New Project')
+      visit heavy_machinery_projectx.projects_path
       click_link qs.id.to_s
-      page.should have_content('Project Info')
+      expect(page).to have_content('Project Info')
       click_link 'New Log'
-      page.should have_content('Log')
+      expect(page).to have_content('Log')
       #save_and_open_page
-      visit projects_path() 
+      visit heavy_machinery_projectx.projects_path() 
       save_and_open_page
       click_link 'Edit'
       #save_and_open_page
-      page.should have_content('Edit Project')
+      expect(page).to have_content('Edit Project')
       
       
-      visit projects_path(:customer_id => @cust.id)
+      visit heavy_machinery_projectx.projects_path(:customer_id => @cust.id)
       #save_and_open_page
       click_link('Purchasing')
       save_and_open_page
       
-      visit projects_path(:customer_id => @cust.id)
+      visit heavy_machinery_projectx.projects_path(:customer_id => @cust.id)
       #save_and_open_page
       click_link('Sourcing')
       save_and_open_page
       
-      visit projects_path(:customer_id => @cust.id)
+      visit heavy_machinery_projectx.projects_path(:customer_id => @cust.id)
       save_and_open_page
       click_link('Production Plans')
       #save_and_open_page
       
-      visit projects_path(:customer_id => @cust.id)
+      visit heavy_machinery_projectx.projects_path(:customer_id => @cust.id)
       #save_and_open_page
       click_link('Installation Plans')
       #save_and_open_page

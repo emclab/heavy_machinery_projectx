@@ -1,10 +1,11 @@
-require 'spec_helper'
+require 'rails_helper'
 
 module HeavyMachineryProjectx
-  describe ProjectsController do
+  RSpec.describe ProjectsController, type: :controller do
+    routes {HeavyMachineryProjectx::Engine.routes}
     before(:each) do
-      controller.should_receive(:require_signin)
-      controller.should_receive(:require_employee)
+      expect(controller).to receive(:require_signin)
+      expect(controller).to receive(:require_employee)
     end
     before(:each) do
       @project_num_time_gen = FactoryGirl.create(:engine_config, :engine_name => 'heavy_machinery_projectx', :engine_version => nil, :argument_name => 'project_num_time_gen', :argument_value => ' HeavyMachineryProjectx::Project.last.nil? ? (Time.now.strftime("%Y%m%d") + "-"  + 112233.to_s + "-" + rand(100..999).to_s) :  (Time.now.strftime("%Y%m%d") + "-"  + (HeavyMachineryProjectx::Project.last.project_num.split("-")[-2].to_i + 555).to_s + "-" + rand(100..999).to_s)')
@@ -18,6 +19,7 @@ module HeavyMachineryProjectx
       @u = FactoryGirl.create(:user, :user_levels => [ul], :user_roles => [ur])
       @cust = FactoryGirl.create(:kustomerx_customer)
       
+      session[:user_role_ids] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id).user_role_ids
     end
       
     render_views
@@ -31,22 +33,20 @@ module HeavyMachineryProjectx
         user_access = FactoryGirl.create(:user_access, :action => 'index_installation_plan', :resource => 'event_taskx_event_tasks', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "EventTaskx::EventTask.where(:task_category => 'installation_plan').order('id DESC')")     
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.create(:heavy_machinery_projectx_project, :cancelled => false, :last_updated_by_id => @u.id)
         qs1 = FactoryGirl.create(:heavy_machinery_projectx_project, :cancelled => false, :last_updated_by_id => @u.id,  :project_num => '23444',  :name => 'newnew')
-        get 'index' , {:use_route => :heavy_machinery_projectx}
-        assigns(:projects).should =~ [qs, qs1]       
+        get 'index' 
+        expect(assigns(:projects)).to match_array([qs, qs1])       
       end
       
       it "should return project for the project_type" do
         user_access = FactoryGirl.create(:user_access, :action => 'index', :resource => 'heavy_machinery_projectx_projects', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "HeavyMachineryProjectx::Project.where(:cancelled => false).order('id')")        
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.create(:heavy_machinery_projectx_project, :cancelled => false, :last_updated_by_id => @u.id)
         qs1 = FactoryGirl.create(:heavy_machinery_projectx_project, :cancelled => true, :last_updated_by_id => @u.id,  :project_num => '4355556', :name => 'newnew')
-        get 'index' , {:use_route => :heavy_machinery_projectx}
-        assigns(:projects).should eq([qs])
+        get 'index' 
+        expect(assigns(:projects)).to match_array([qs])
       end
       
     end
@@ -57,9 +57,8 @@ module HeavyMachineryProjectx
         user_access = FactoryGirl.create(:user_access, :action => 'create', :resource => 'heavy_machinery_projectx_projects', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")        
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
-        get 'new' , {:use_route => :heavy_machinery_projectx}
-        response.should be_success
+        get 'new' 
+        expect(response).to be_success
       end
            
     end
@@ -69,20 +68,18 @@ module HeavyMachineryProjectx
         user_access = FactoryGirl.create(:user_access, :action => 'create', :resource => 'heavy_machinery_projectx_projects', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")        
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.attributes_for(:heavy_machinery_projectx_project)
-        get 'create' , {:use_route => :heavy_machinery_projectx,  :project => qs}
-        response.should redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
+        get 'create' , {:project => qs}
+        expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
       end
       
       it "should render 'new' if data error" do
         user_access = FactoryGirl.create(:user_access, :action => 'create', :resource => 'heavy_machinery_projectx_projects', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")        
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.attributes_for(:heavy_machinery_projectx_project, :name => nil)
-        get 'create' , {:use_route => :heavy_machinery_projectx,  :project => qs}
-        response.should render_template("new")
+        get 'create' , {:project => qs}
+        expect(response).to render_template("new")
       end
     end
   
@@ -92,10 +89,9 @@ module HeavyMachineryProjectx
         user_access = FactoryGirl.create(:user_access, :action => 'update', :resource => 'heavy_machinery_projectx_projects', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")        
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.create(:heavy_machinery_projectx_project, :customer_id => @cust.id)
-        get 'edit' , {:use_route => :heavy_machinery_projectx,  :id => qs.id}
-        response.should be_success
+        get 'edit' , {:id => qs.id}
+        expect(response).to be_success
       end
       
     end
@@ -106,20 +102,18 @@ module HeavyMachineryProjectx
         user_access = FactoryGirl.create(:user_access, :action => 'update', :resource => 'heavy_machinery_projectx_projects', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")        
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.create(:heavy_machinery_projectx_project)
-        get 'update' , {:use_route => :heavy_machinery_projectx,  :id => qs.id, :project => {:name => 'newnew'}}
-        response.should redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
+        get 'update' , {:id => qs.id, :project => {:name => 'newnew'}}
+        expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
       end
       
       it "should render 'new' if data error" do
         user_access = FactoryGirl.create(:user_access, :action => 'update', :resource => 'heavy_machinery_projectx_projects', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")        
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.create(:heavy_machinery_projectx_project)
-        get 'update' , {:use_route => :heavy_machinery_projectx,  :id => qs.id, :project => {:name => nil}}
-        response.should render_template("edit")
+        get 'update' , {:id => qs.id, :project => {:name => nil}}
+        expect(response).to render_template("edit")
       end
     end
   
@@ -129,10 +123,9 @@ module HeavyMachineryProjectx
         user_access = FactoryGirl.create(:user_access, :action => 'show', :resource => 'heavy_machinery_projectx_projects', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")        
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.create(:heavy_machinery_projectx_project)
-        get 'show' , {:use_route => :heavy_machinery_projectx,  :id => qs.id}
-        response.should be_success
+        get 'show' , {:id => qs.id}
+        expect(response).to be_success
       end
     end
   end
