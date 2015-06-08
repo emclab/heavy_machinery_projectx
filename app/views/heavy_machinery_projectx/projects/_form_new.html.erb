@@ -2,6 +2,7 @@
   <%= render inline: @erb_code %>
   
 <% else %>
+<h4><%= @title %></h4>
 <%= simple_form_for @project do |f| %>
   <%= f.input :customer_name_autocomplete,:input_html => { data: {autocomplete_source: SUBURI + kustomerx.autocomplete_customers_path}},
               :label => t('Customer'), :placeholder => "输入关键字选择客户", :required => true unless @customer%>

@@ -2,7 +2,7 @@
   <%= render inline: ERB.new(@erb_code).result(binding) %>
   
 <% else %>
-<div id="main_body">
+
 <h4><%= @title %></h4>
 
 <p>
@@ -108,6 +108,6 @@
 </table>
 
 
-</div>
+
 
 <% end %>
